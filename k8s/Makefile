@@ -7,7 +7,6 @@ GOFILES=`find . -type f -name '*.go'`
 .PHONY: test
 .PHONY: render
 .PHONY: apply
-.PHONY: minikube
 .PHONY: kubectl-clean
 .PHONY: docker-run
 .PHONY: docker-debug
@@ -32,11 +31,6 @@ render:
 
 apply:
 	@ytt -f templates | kubectl apply -f -
-
-minikube:
-	@ytt -f templates -f addons -v admin.client_secret="adminsecret" | kubectl apply -f - \
-	&& echo "To connect to the UAA, run 'uaa target http://$(minikube ip) --skip-ssl-validation' once ingress is available" \
-	&& echo "To get an admin client token, run 'uaa get-client-credentials-token admin -s adminsecret'"
 
 kubectl-clean:
 	kubectl delete deployments,services,secrets,replicasets,services,pods,configmaps,serviceaccounts --all
