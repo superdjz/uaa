@@ -8,6 +8,7 @@ GOFILES=`find . -type f -name '*.go'`
 .PHONY: render
 .PHONY: apply
 .PHONY: kubectl-clean
+.PHONY: kubectl-clean-all
 .PHONY: docker-run
 .PHONY: docker-debug
 .PHONY: brew-cli
@@ -34,6 +35,9 @@ apply:
 
 kubectl-clean:
 	kubectl delete deployments,services,secrets,replicasets,services,pods,configmaps,serviceaccounts --all
+
+kubectl-clean-all:
+	kubectl delete all,ingress --all
 
 docker-run:
 	docker pull cfidentity/uaa:latest \
